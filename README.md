@@ -10,6 +10,8 @@ This is a simple Todo App built using **Remix** and **Prisma** for managing task
 - Delete todos.
 
 The app is designed with a responsive layout and includes basic features for managing a todo list.
+<img width="695" alt="image" src="https://github.com/user-attachments/assets/546e61a9-49b2-428d-ab80-3b47313cccf6" />
+
 
 ## GitHub Repository
 
