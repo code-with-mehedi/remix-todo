@@ -1,40 +1,122 @@
-# Welcome to Remix!
+# Remix Todo App
 
-- 📖 [Remix docs](https://remix.run/docs)
+## Overview
 
-## Development
+This is a simple Todo App built using **Remix** and **Prisma** for managing tasks. It allows users to:
 
-Run the dev server:
+- View a list of todos.
+- Add new todos.
+- Edit existing todos.
+- Delete todos.
 
-```shellscript
+The app is designed with a responsive layout and includes basic features for managing a todo list.
+
+## GitHub Repository
+
+You can access the source code for this project here:  
+[Remix Todo App Repository](https://github.com/code-with-mehedi/remix-todo)
+
+## Requirements
+
+Before running the app, you will need to set up the following:
+
+- **Node.js**: Ensure you have [Node.js](https://nodejs.org/) installed (version 16.0.0 or higher is recommended).
+- **Prisma**: Prisma ORM is used for database management.
+- **MySQL Database**: You need a running MySQL database to store todos.
+
+## Installation
+
+Follow the steps below to install and set up the Remix Todo App:
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/code-with-mehedi/remix-todo.git
+cd remix-todo
+```
+2. Install dependencies
+
+```bash
+npm install
+```
+3. Set up environment variables
+Create a .env file in the root directory and configure your database connection. If you're using MySQL, the .env file should look like this:
+
+DATABASE_URL="mysql://root@127.0.0.1:3330/remix-todo"
+Ensure that the MySQL server is running on 127.0.0.1:3330, and the remix-todo database exists or can be created automatically.
+
+4. Run database migrations
+Run the following Prisma commands to set up your database schema:
+
+```bash
+npx prisma migrate dev --name init
+This will apply the migration and generate the necessary files to connect to your database.
+```
+5. Generate Prisma Client
+After applying migrations, generate the Prisma client:
+
+```bash
+npx prisma generate
+```
+6. Start the development server
+Now, run the development server:
+
+```bash
 npm run dev
 ```
+The app should now be accessible at http://localhost:3000.
 
-## Deployment
 
-First, build your app for production:
+1. Set up Prisma Client
+Install the necessary Prisma dependencies:
 
-```sh
-npm run build
+```bash
+npm install @prisma/client
+npm install prisma --save-dev
 ```
+2. Define Your Database Schema
+In the prisma/schema.prisma file, define your database schema. The Todo model should look like this:
+```bash
+datasource db {
+  provider = "mysql" // Use "mysql" for MySQL database
+  url      = env("DATABASE_URL") // The URL is taken from the .env file
+}
 
-Then run the app in production mode:
+generator client {
+  provider = "prisma-client-js"
+}
 
-```sh
-npm start
+model Todo {
+  id        Int     @id @default(autoincrement())
+  title     String
+  completed Boolean @default(false)
+}
 ```
+3. Run Prisma Migrations
+To apply the schema changes to the database, run the following command:
 
-Now you'll need to pick a host to deploy it to.
+```bash
+npx prisma migrate dev --name init
+```
+This will generate the migration file and apply it to your remix-todo database.
 
-### DIY
+4. Generate Prisma Client
+After running migrations, generate Prisma Client:
 
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
+```bash
+npx prisma generate
+```
+5. Connecting to the Database
+In the app, the Prisma Client is initialized like this:
 
-Make sure to deploy the output of `npm run build`
+```bash
 
-- `build/server`
-- `build/client`
+const prisma = new PrismaClient();
+```
+This client allows you to interact with the database by performing queries, updates, and deletions, as seen in the app’s loader and action functions.
 
-## Styling
+6. Verifying the Setup
+After completing the setup, you should be able to run the app, interact with the todos, and have them persist in your MySQL database.
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+License
+This app is open-source and available under the MIT License.
